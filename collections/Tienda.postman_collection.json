@@ -1,0 +1,917 @@
+{
+	"info": {
+		"_postman_id": "d142c571-4e85-480b-96ab-0e78fac994c8",
+		"name": "Tienda",
+		"description": "Buy or rent spacecrafts",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18050329"
+	},
+	"item": [
+		{
+			"name": "Crear tienda",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"store_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nombre\": \"Totto\",\r\n   \"ciudad\": \"BOG\",\r\n   \"direccion\": \"Car X # 15-51\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/stores",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Error agregando un producto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\r\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"code\": 400,\n  \"message\": \"El atributo nombre no debe estar vacio\"\n}"
+				},
+				{
+					"name": "Agregar un producto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nombre\": \"Wasabi\",\r\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\r\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"id\":2,\n   \"nombre\": \"Wasabi\",\n   \"descripcion\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\"  \n}"
+				}
+			]
+		},
+		{
+			"name": "Crear tienda invalida",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La ciudad debe ser un codigo de 3 caracteres\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"nombre\": \"Totto\",\r\n   \"ciudad\": \"Medellin\",\r\n   \"direccion\": \"Car X # 15-51\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/stores",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Error agregando un producto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\r\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"code\": 400,\n  \"message\": \"El atributo nombre no debe estar vacio\"\n}"
+				},
+				{
+					"name": "Agregar un producto",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"nombre\": \"Wasabi\",\r\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\r\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"id\":2,\n   \"nombre\": \"Wasabi\",\n   \"descripcion\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\"  \n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener todos las tiendas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/stores",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener un producto",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"id\":2,\n   \"nombre\": \"Wasabi\",\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\", \n     \"categoria\": [\n        {\n            \"id\": 1,\n            \"nombre\": \"Condimento\"\n        }]\n}"
+				},
+				{
+					"name": "Error obtener un producto",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_id}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"El producto no fue encontrado\"\n}\n"
+				}
+			]
+		},
+		{
+			"name": "Obtener una tienda por un ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/stores/{{store_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores",
+						"{{store_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener todos los productos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n   {\n   \"id\":1,\n   \"nombre\": \"Wasabi\",\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\", \n   \"categoria\":\"condimento\" \n},\n{\n   \"id\":2,\n   \"nombre\": \"Bandeja paisa\",\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\", \n   \"categoria\":\"condimento\" \n}\n]"
+				}
+			]
+		},
+		{
+			"name": "Obtener una tienda por un ID que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La tienda no fue encontrada\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/stores/f8695b8f-b182-4ac9-a3cc-17528789d1bf",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores",
+						"f8695b8f-b182-4ac9-a3cc-17528789d1bf"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener todos los productos",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n   {\n   \"id\":1,\n   \"nombre\": \"Wasabi\",\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\", \n   \"categoria\":\"condimento\" \n},\n{\n   \"id\":2,\n   \"nombre\": \"Bandeja paisa\",\n   \"descripción\": \"El wasabi (山葵 o ワサビ?) es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n   \"historia\":\"El wasabi era una planta silvestre como muchas otras hierbas. Debido a que es una planta que tiene un olor acre y estimulante, se supone que una vez fue utilizada como planta medicinal. En un libro del siglo VI, se puede encontrar la mención más antigua de la palabra Wasabi en Japón.\", \n   \"categoria\":\"condimento\" \n}\n]"
+				}
+			]
+		},
+		{
+			"name": "Eliminar tienda",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/stores/{{store_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores",
+						"{{store_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar producto",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/{IdProducto}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{IdProducto}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Error eliminar producto",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/{idProducto}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{idProducto}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n   \"statusCode\": 404,\r\n   \"message\": \"El producto no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Eliminar tienda que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La tienda no fue encontrada\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/stores/cbfcf3fe-7f09-4ae5-8986-79314effcbb6",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores",
+						"cbfcf3fe-7f09-4ae5-8986-79314effcbb6"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Eliminar producto",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/{IdProducto}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{IdProducto}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Error eliminar producto",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productos/{idProducto}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{idProducto}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n   \"statusCode\": 404,\r\n   \"message\": \"El producto no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar tienda",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"nombre\": \"Totto\",\n   \"ciudad\": \"BRQ\",\n   \"direccion\": \"Car 12 # 15-51\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/stores/{{store_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores",
+						"{{store_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar producto",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": {{idProducto}},\r\n   \"nombre\": \"Café\",\r\n   \"descripción\": \"El café es una infusión caliente que se consume en varios países de occidente. Su nombre deriva de un árbol: la planta cafeto cuyo grano es el que se utiliza para la realización de dicha infusión\",\r\n   \"historia\":\"El café llegó primero a la colonia holandesa de Surinam en 1718, y después se plantaron cafetales en la Guyana francesa y el primero de muchos en Brasil, en Pará. En 1730 los británicos llevaron el café a Jamaica, donde hoy en día se cultiva el café más famoso y caro del mundo, en las Blue Mountains\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_id}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"id\": 30,\n   \"nombre\": \"Café\",\n   \"descripcion\": \"El café es una infusión caliente que se consume en varios países de occidente. Su nombre deriva de un árbol: la planta cafeto cuyo grano es el que se utiliza para la realización de dicha infusión\",\n   \"historia\":\"El café llegó primero a la colonia holandesa de Surinam en 1718, y después se plantaron cafetales en la Guyana francesa y el primero de muchos en Brasil, en Pará. En 1730 los británicos llevaron el café a Jamaica, donde hoy en día se cultiva el café más famoso y caro del mundo, en las Blue Mountains\"  \n}"
+				},
+				{
+					"name": "Error actualizar producto",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": {{idProducto}},\r\n   \"nombre\": \"Café\",\r\n   \"descripción\": \"El café es una infusión caliente que se consume en varios países de occidente. Su nombre deriva de un árbol: la planta cafeto cuyo grano es el que se utiliza para la realización de dicha infusión\",\r\n   \"historia\":\"El café llegó primero a la colonia holandesa de Surinam en 1718, y después se plantaron cafetales en la Guyana francesa y el primero de muchos en Brasil, en Pará. En 1730 los británicos llevaron el café a Jamaica, donde hoy en día se cultiva el café más famoso y caro del mundo, en las Blue Mountains\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_id}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"El producto no fue encontrado\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar una tienda que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get expected error message\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"La tienda no fue encontrada\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"nombre\": \"Totto\",\n   \"ciudad\": \"BOG\",\n   \"direccion\": \"Car X # 15-51\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/stores/cbfcf3fe-7f09-4ae5-8986-79314effcbb6",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"stores",
+						"cbfcf3fe-7f09-4ae5-8986-79314effcbb6"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar producto",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": {{idProducto}},\r\n   \"nombre\": \"Café\",\r\n   \"descripción\": \"El café es una infusión caliente que se consume en varios países de occidente. Su nombre deriva de un árbol: la planta cafeto cuyo grano es el que se utiliza para la realización de dicha infusión\",\r\n   \"historia\":\"El café llegó primero a la colonia holandesa de Surinam en 1718, y después se plantaron cafetales en la Guyana francesa y el primero de muchos en Brasil, en Pará. En 1730 los británicos llevaron el café a Jamaica, donde hoy en día se cultiva el café más famoso y caro del mundo, en las Blue Mountains\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_id}}"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"id\": 30,\n   \"nombre\": \"Café\",\n   \"descripcion\": \"El café es una infusión caliente que se consume en varios países de occidente. Su nombre deriva de un árbol: la planta cafeto cuyo grano es el que se utiliza para la realización de dicha infusión\",\n   \"historia\":\"El café llegó primero a la colonia holandesa de Surinam en 1718, y después se plantaron cafetales en la Guyana francesa y el primero de muchos en Brasil, en Pará. En 1730 los británicos llevaron el café a Jamaica, donde hoy en día se cultiva el café más famoso y caro del mundo, en las Blue Mountains\"  \n}"
+				},
+				{
+					"name": "Error actualizar producto",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\": {{idProducto}},\r\n   \"nombre\": \"Café\",\r\n   \"descripción\": \"El café es una infusión caliente que se consume en varios países de occidente. Su nombre deriva de un árbol: la planta cafeto cuyo grano es el que se utiliza para la realización de dicha infusión\",\r\n   \"historia\":\"El café llegó primero a la colonia holandesa de Surinam en 1718, y después se plantaron cafetales en la Guyana francesa y el primero de muchos en Brasil, en Pará. En 1730 los británicos llevaron el café a Jamaica, donde hoy en día se cultiva el café más famoso y caro del mundo, en las Blue Mountains\"  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productos/{{producto_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"productos",
+								"{{producto_id}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"El producto no fue encontrado\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "X-Api-Key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "<API Key>",
+				"type": "string"
+			},
+			{
+				"key": "in",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000/api/v1",
+			"type": "string"
+		}
+	]
+}
